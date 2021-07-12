@@ -136,15 +136,15 @@ def validation_classification(model, val_dataloader, epoch, criterion, cfg,
 
         with open(
                 os.path.join(eval_path,
-                             "{}.txt".format(cfg.DDP_CONFIG.GPU_WORLD_RANK)),
+                             "0.txt"),
                 'w') as f:
             f.write("{} {} {}\n".format(losses.avg, top1.avg, top5.avg))
-        torch.distributed.barrier()
+        #torch.distributed.barrier()
 
         loss_lst, top1_lst, top5_lst = [], [], []
         if cfg.DDP_CONFIG.GPU_WORLD_RANK == 0 and writer is not None:
             print("Collecting validation numbers")
-            for x in range(cfg.DDP_CONFIG.GPU_WORLD_SIZE):
+            for x in range(1):
                 data = open(os.path.join(
                     eval_path,
                     "{}.txt".format(x))).readline().strip().split(" ")

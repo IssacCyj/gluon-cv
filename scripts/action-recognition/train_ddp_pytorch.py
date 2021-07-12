@@ -66,6 +66,7 @@ def main_worker(cfg):
 
     # train loop
     base_iter = 0
+    validation_classification(model, val_loader, 0, criterion, cfg, writer)
     for epoch in range(cfg.CONFIG.TRAIN.EPOCH_NUM):
         if cfg.DDP_CONFIG.DISTRIBUTED:
             train_sampler.set_epoch(epoch)
